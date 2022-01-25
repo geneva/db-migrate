@@ -53,7 +53,7 @@ case "$1" in
     confirm "This will destroy all data and reset schema to schema.sql. Are you sure?"
     dropdb --if-exists --host="$DB_HOST" --username="$DB_USER" "$DB_NAME"
     createdb --host="$DB_HOST" --username="$DB_USER" "$DB_NAME"
-    psql --dbname="$DB_NAME" --host="$DB_HOST" --username="$DB_USER" < /schema.sql
+    psql --quiet --dbname="$DB_NAME" --host="$DB_HOST" --username="$DB_USER" < /schema.sql
     ;;
   up)
     sql-migrate up -env=default
