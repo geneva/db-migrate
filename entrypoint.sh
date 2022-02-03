@@ -9,12 +9,13 @@ function print_usage {
 Usage: db command
 
 Available commands are:
-  status         Show status of migrations
-  reset          Reset the database to latest schema.sql
-  up             Migrates the database to the most recent version available
-  down           Undoes the most recent database migration
-  psql           Drops you into the postgres terminal
-  new [name]     Creates a new migration with the specified name
+  status          Show status of migrations
+  reset [--force] Reset the database to latest schema.sql
+                    --force will suppress the manual confirmation
+  up              Migrates the database to the most recent version available
+  down            Undoes the most recent database migration
+  psql            Drops you into the postgres terminal
+  new [name]      Creates a new migration with the specified name
 EOF
 }
 
@@ -50,7 +51,9 @@ case "$1" in
     sql-migrate status -env=default
     ;;
   reset)
-    confirm "This will destroy all data and reset schema to schema.sql. Are you sure?"
+    if [[ "$2" != "--force" ]] ; then
+      confirm "This will destroy all data and reset schema to schema.sql. Are you sure?"
+    fi
     dropdb --if-exists --host="$DB_HOST" --username="$DB_USER" "$DB_NAME"
     createdb --host="$DB_HOST" --username="$DB_USER" "$DB_NAME"
     psql --quiet --dbname="$DB_NAME" --host="$DB_HOST" --username="$DB_USER" < /schema.sql
