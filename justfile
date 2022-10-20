@@ -1,5 +1,5 @@
 build-latest:
-  docker build -t genevachat/db-migrate:latest .
+  docker buildx build --platform=linux/arm64,linux/amd64 -t genevachat/db-migrate:latest .
 
 build-commit:
   #!/usr/bin/bash
