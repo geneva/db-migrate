@@ -16,5 +16,5 @@ build-commit:
 
   commit_hash=$(git rev-parse --short HEAD)
   image_tag=genevachat/db-migrate:$commit_hash
-  docker buildx build --platform linux/arm64,linux/amd64 -t $image_tag .
+  docker buildx build --push --platform linux/arm64,linux/amd64 -t $image_tag .
   echo built: $image_tag
