@@ -1,8 +1,5 @@
-build *args="latest":
-  docker buildx build --platform linux/arm64,linux/amd64 -t genevachat/db-migrate:{{ args }} .
-
-push *args="latest":
-  docker push genevachat/db-migrate:{{ args }}
+build-latest:
+  docker buildx build --push --platform linux/arm64,linux/amd64 -t genevachat/db-migrate:latest .
 
 build-commit:
   #!/usr/bin/env bash
