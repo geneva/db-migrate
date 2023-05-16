@@ -48,7 +48,7 @@ function update_schema_sql {
 
 case "$1" in
   status)
-    sql-migrate status -env=default
+    sql-migrate status -env=${MIGRATE_ENV:-default}
     ;;
   reset)
     if [[ "$2" != "--force" ]] ; then
@@ -59,7 +59,7 @@ case "$1" in
     psql --quiet --dbname="$DB_NAME" --host="$DB_HOST" --username="$DB_USER" < /schema.sql
     ;;
   up)
-    sql-migrate up -env=default
+    sql-migrate up --env=${MIGRATE_ENV:-default}
     update_schema_sql
     ;;
   new)
@@ -67,10 +67,10 @@ case "$1" in
       print_usage
       exit 1
     fi
-    sql-migrate new -env=default "$2"
+    sql-migrate new --env=${MIGRATE_ENV:-default} "$2"
     ;;
   down)
-    sql-migrate "$@" -env=default
+    sql-migrate "$@" --env=${MIGRATE_ENV:-default}
     update_schema_sql
     ;;
   psql)
