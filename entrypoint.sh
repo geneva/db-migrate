@@ -4,7 +4,7 @@ set -eo pipefail
 
 export PGPASSWORD="$DB_PASS"
 
-function print_usage {
+print_usage () {
   cat <<- EOF
 Usage: db command
 
@@ -19,7 +19,7 @@ Available commands are:
 EOF
 }
 
-function confirm {
+confirm () {
   QUESTION="$1"
   CONTINUE="nil"
   while [ "$CONTINUE" != "yes" ]; do
@@ -31,11 +31,11 @@ function confirm {
   done
 }
 
-function db_dump {
+db_dump () {
   pg_dump --dbname="$DB_NAME" --host="$DB_HOST" --username="$DB_USER" "$@"
 }
 
-function update_schema_sql {
+update_schema_sql () {
   if [ "$UPDATE_SCHEMA_SQL" != "true" ]; then
     echo "UPDATE_SCHEMA_SQL is not true, skipping schema.sql update"
     return
