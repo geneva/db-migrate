@@ -16,6 +16,7 @@ Available commands are:
   down            Undoes the most recent database migration
   psql            Drops you into the postgres terminal
   new [name]      Creates a new migration with the specified name
+  command [cmd]   Passes the command through to psql
 EOF
 }
 
