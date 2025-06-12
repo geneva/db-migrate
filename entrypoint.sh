@@ -76,6 +76,13 @@ case "$1" in
   psql)
     psql --dbname="$DB_NAME" --host="$DB_HOST" --username="$DB_USER"
     ;;
+  command)
+    if [ -z "$2" ]; then
+      print_usage
+      exit 1
+    fi
+    psql --dbname="$DB_NAME" --host="$DB_HOST" --username="$DB_USER" --command="$2"
+    ;;
   *)
     print_usage
     exit 1
